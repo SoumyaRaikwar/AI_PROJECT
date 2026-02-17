@@ -6,20 +6,21 @@ import (
 	"log"
 
 	"github.com/tmc/langchaingo/llms"
-	OpenAI "github.com/tmc/langchaingo/llms/openai"
+	"github.com/tmc/langchaingo/llms/ollama"
 )
 
 func main() {
      
-	llm, err := OpenAI.New()
+	llm, err := ollama.New(ollama.WithModel("llama3.2:latest"))
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	prompt := "What year did Shahrukh Khan born?"
+	ctx := context.Background()
+	prompt := "What is the capital of France?"
 
 	completion, err := llms.GenerateFromSinglePrompt(
-		context.Background(),
+		ctx,
 		llm,
 		prompt,
 	)
